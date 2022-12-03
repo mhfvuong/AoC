@@ -4,6 +4,7 @@ use std::io;
 use std::io::Read;
 use crate::days::day1::elf_calories;
 use crate::days::day2::rock_paper_scissor;
+use crate::days::day3::rucksack;
 
 mod days;
 
@@ -13,6 +14,7 @@ fn main() {
     let stdin = io::stdin();
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     path.push("src");
+    path.push("puzzle_data");
     stdin.read_line(&mut user_input);
     if user_input.trim() == String::from("tst") {
         path.push("test_input.txt");
@@ -26,5 +28,6 @@ fn main() {
     let mut data_string = String::new();
     data_file.read_to_string(&mut data_string);
     // elf_calories(data_string); // Day 1
-    rock_paper_scissor(data_string);
+    // rock_paper_scissor(data_string); // Day 2
+    rucksack(data_string); // Day 3
 }
