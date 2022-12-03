@@ -2,6 +2,10 @@ use std::fs::File;
 use std::path::PathBuf;
 use std::io;
 use std::io::Read;
+use crate::days::day1::elf_calories;
+
+mod days;
+
 
 fn main() {
     let mut user_input = String::new();
@@ -20,5 +24,5 @@ fn main() {
     let mut data_file = File::open(&path).unwrap();
     let mut data_string = String::new();
     data_file.read_to_string(&mut data_string);
-    println!("{}", data_string);
+    elf_calories(data_string);
 }
