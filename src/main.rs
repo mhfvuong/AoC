@@ -1,5 +1,7 @@
+use std::fs::File;
 use std::path::PathBuf;
 use std::io;
+use std::io::Read;
 
 fn main() {
     let mut user_input = String::new();
@@ -15,6 +17,8 @@ fn main() {
         path.push("input.txt");
         println!("real data input:");
     }
-
-    // path.push("")
+    let mut data_file = File::open(&path).unwrap();
+    let mut data_string = String::new();
+    data_file.read_to_string(&mut data_string);
+    println!("{}", data_string);
 }
