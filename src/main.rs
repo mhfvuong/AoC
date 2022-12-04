@@ -5,6 +5,7 @@ use std::io::Read;
 use crate::days::day1::elf_calories;
 use crate::days::day2::rock_paper_scissor;
 use crate::days::day3::rucksack;
+use crate::days::day4::cleanup_pairs;
 
 mod days;
 
@@ -29,5 +30,6 @@ fn main() {
     data_file.read_to_string(&mut data_string);
     // elf_calories(data_string); // Day 1
     // rock_paper_scissor(data_string); // Day 2
-    rucksack(data_string); // Day 3
+    // rucksack(data_string); // Day 3
+    cleanup_pairs(data_string); // Day 4
 }
