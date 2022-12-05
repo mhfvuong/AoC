@@ -6,6 +6,7 @@ use crate::days::day1::elf_calories;
 use crate::days::day2::rock_paper_scissor;
 use crate::days::day3::rucksack;
 use crate::days::day4::cleanup_pairs;
+use crate::days::day5::crate_crane;
 
 mod days;
 
@@ -31,5 +32,6 @@ fn main() {
     // elf_calories(data_string); // Day 1
     // rock_paper_scissor(data_string); // Day 2
     // rucksack(data_string); // Day 3
-    cleanup_pairs(data_string); // Day 4
+    // cleanup_pairs(data_string); // Day 4
+    crate_crane(data_string); // Day 5
 }
