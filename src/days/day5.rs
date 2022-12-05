@@ -28,16 +28,21 @@ pub fn crate_crane(data_string: String) {
             let s = line.split(" from ").collect::<Vec<&str>>();
             let amount = s[0].split(" ").collect::<Vec<&str>>();
             let origin_destination = s[1].split(" to ").collect::<Vec<&str>>();
-            let mut element: char = 'a';
-            for _ in 0..amount[1].parse::<usize>().unwrap() {
+            let mut buff = Vec::new();
+            for i in 0..amount[1].parse::<usize>().unwrap() { // part 1
                 if let Some(origin) = crates.get_mut(&origin_destination[0].parse::<usize>().unwrap()) {
                     match origin.pop() {
-                        Some(T) => element = T,
+                        Some(t) => buff.push(t),
                         None => (),
                     }
                 }
+            }
+            for i in 0..amount[1].parse::<usize>().unwrap() {
                 if let Some(destination) = crates.get_mut(&origin_destination[1].parse::<usize>().unwrap()) {
-                    destination.push(element);
+                    match buff.pop() {
+                        Some(t) => destination.push(t),
+                        None => (),
+                    }
                 }
             }
         }
