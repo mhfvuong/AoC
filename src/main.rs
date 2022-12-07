@@ -8,6 +8,7 @@ use crate::days::day3::rucksack;
 use crate::days::day4::cleanup_pairs;
 use crate::days::day5::crate_crane;
 use crate::days::day6::tune_device;
+use crate::days::day7::file_size;
 
 mod days;
 
@@ -35,5 +36,6 @@ fn main() {
     // rucksack(data_string); // Day 3
     // cleanup_pairs(data_string); // Day 4
     // crate_crane(data_string); // Day 5
-    tune_device(data_string); // Day 6
+    // tune_device(data_string); // Day 6
+    file_size(data_string); // Day 7
 }
