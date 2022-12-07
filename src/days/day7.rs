@@ -39,8 +39,8 @@ pub fn file_size(data_string: String) {
             }
             else {
                 dir_size[index] += file[0].parse::<usize>().unwrap();
-                if index_parent.len() != 0 {
-                    dir_size[index_parent[index_parent.len() - 1]] += file[0].parse::<usize>().unwrap();
+                for idx in index_parent {
+                    dir_size[idx] += file[0].parse::<usize>().unwrap();
                 }
             }
         }
