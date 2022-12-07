@@ -3,7 +3,7 @@ pub fn elf_calories(data_string: String){
     let mut calories: u32 = 0;
     let mut calories_per_elf: Vec<u32> = Vec::new();
     for line in lines {
-        if line == ""{
+        if line.is_empty() {
             // println!("new_elf");
             calories_per_elf.push(calories);
             calories = 0;

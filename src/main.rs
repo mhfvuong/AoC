@@ -19,23 +19,39 @@ fn main() {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     path.push("src");
     path.push("puzzle_data");
-    stdin.read_line(&mut user_input);
-    if user_input.trim() == String::from("tst") {
-        path.push("test_input.txt");
-        println!("test input:");
+    println!("enter 'tst' for tst data, or only press enter for real data");
+    stdin.read_line(&mut user_input).expect(
+        "Reading user input went wrong"
+    );
+    if user_input.trim() == "tst".to_string() {
+        path.push("test");
     }
     else {
-        path.push("input.txt");
-        println!("real data input:");
+        path.push("real");
     }
+
+    println!("choose a day (1-current)");
+    user_input = "".to_string();
+    stdin.read_line(&mut user_input).expect(
+        "Reading user input went wrong"
+    );
+
+    path.push("day".to_owned() + user_input.trim() + ".txt");
     let mut data_file = File::open(&path).unwrap();
     let mut data_string = String::new();
-    data_file.read_to_string(&mut data_string);
-    // elf_calories(data_string); // Day 1
-    // rock_paper_scissor(data_string); // Day 2
-    // rucksack(data_string); // Day 3
-    // cleanup_pairs(data_string); // Day 4
-    // crate_crane(data_string); // Day 5
-    // tune_device(data_string); // Day 6
-    file_size(data_string); // Day 7
+    data_file.read_to_string(&mut data_string).expect(
+        "Something went wrong with reading the data"
+    );
+
+    println!("Result:");
+    match user_input.trim() {
+        "1" => {elf_calories(data_string);}, // Day 1
+        "2" => rock_paper_scissor(data_string), // Day 2
+        "3" => rucksack(data_string), // Day 3
+        "4" => cleanup_pairs(data_string), // Day 4
+        "5" => crate_crane(data_string), // Day 5
+        "6" => tune_device(data_string), // Day 6
+        "7" => file_size(data_string), // Day 7
+        _ => println!("No day has been selected, try again")
+    }
 }

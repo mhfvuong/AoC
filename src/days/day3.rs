@@ -29,15 +29,15 @@ pub fn rucksack(data_string: String) {
         counter += 1;
         if counter % 3 == 0 {
             for item in group[group.len() - 1].keys() {
-                match group[group.len() - 2].get(&item) {
+                match group[group.len() - 2].get(item) {
                     None => (),
                     Some(_) => {
-                        match group[group.len() - 3].get(&item) {
+                        match group[group.len() - 3].get(item) {
                             None => (),
                             Some(_) => {
-                                match item_values.get(&item) {
+                                match item_values.get(item) {
                                     None => (),
-                                    Some(T) => total_priority += T,
+                                    Some(t) => total_priority += t,
                                 }
                             }
                         }

@@ -7,9 +7,9 @@ pub fn cleanup_pairs(data_string: String) {
     let mut overlapping: usize = 0;
 
     for line in lines {
-        let pairs = line.split(",").collect::<Vec<&str>>();
-        let range_1 = pairs[0].split("-").collect::<Vec<&str>>();
-        let range_2 = pairs[1].split("-").collect::<Vec<&str>>();
+        let pairs = line.split(',').collect::<Vec<&str>>();
+        let range_1 = pairs[0].split('-').collect::<Vec<&str>>();
+        let range_2 = pairs[1].split('-').collect::<Vec<&str>>();
         let low_1 = range_1[0].parse::<u8>().unwrap();
         let high_1 = range_1[1].parse::<u8>().unwrap();
         let low_2 = range_2[0].parse::<u8>().unwrap();

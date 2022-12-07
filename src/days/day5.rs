@@ -9,16 +9,13 @@ pub fn crate_crane(data_string: String) {
             let mut i = 1;
             let mut n = 0;
             for c in line.chars() {
-                match c {
-                    'A'..='Z' => {
-                        if let Some(stack) = crates.get_mut(&i) {
-                            stack.insert(0,c);
-                        }
-                        else {
-                            crates.insert(i, vec![c]);
-                        }
-                    },
-                    _ => (),
+                if let 'A'..='Z' = c {
+                    if let Some(stack) = crates.get_mut(&i) {
+                        stack.insert(0,c);
+                    }
+                    else {
+                        crates.insert(i, vec![c]);
+                    }
                 }
                 n += 1;
                 if n % 4 == 0 { i += 1; }
@@ -26,27 +23,21 @@ pub fn crate_crane(data_string: String) {
         }
         else if line.len() > 1 && instruction{ // replacing crates
             let s = line.split(" from ").collect::<Vec<&str>>();
-            let amount = s[0].split(" ").collect::<Vec<&str>>();
+            let amount = s[0].split(' ').collect::<Vec<&str>>();
             let origin_destination = s[1].split(" to ").collect::<Vec<&str>>();
             let mut buff = Vec::new();
-            for i in 0..amount[1].parse::<usize>().unwrap() { // part 1
+            for _ in 0..amount[1].parse::<usize>().unwrap() { // part 1
                 if let Some(origin) = crates.get_mut(&origin_destination[0].parse::<usize>().unwrap()) {
-                    match origin.pop() {
-                        Some(t) => buff.push(t),
-                        None => (),
-                    }
+                    if let Some(t) = origin.pop() { buff.push(t) }
                 }
             }
-            for i in 0..amount[1].parse::<usize>().unwrap() {
+            for _ in 0..amount[1].parse::<usize>().unwrap() {
                 if let Some(destination) = crates.get_mut(&origin_destination[1].parse::<usize>().unwrap()) {
-                    match buff.pop() {
-                        Some(t) => destination.push(t),
-                        None => (),
-                    }
+                    if let Some(t) = buff.pop() { destination.push(t) }
                 }
             }
         }
-        if line == "" {instruction = true;}
+        if line.is_empty() {instruction = true;}
     }
     let mut answer = String::new();
     for i in 1..=crates.len() {

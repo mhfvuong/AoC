@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 pub fn tune_device(data_string: String) {
     let lines = data_string.lines();
     let mut counter:usize = 0;

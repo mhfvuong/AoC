@@ -2,7 +2,7 @@ pub fn rock_paper_scissor(data_string: String){
     let lines = data_string.lines();
     let mut points: u32 = 0;
     for line in lines {
-        let split = line.split(" ");
+        let split = line.split(' ');
         let vec = split.collect::<Vec<&str>>();
         let opponent = vec[0];
         let you = vec[1];
