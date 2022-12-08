@@ -9,6 +9,7 @@ use crate::days::day4::cleanup_pairs;
 use crate::days::day5::crate_crane;
 use crate::days::day6::tune_device;
 use crate::days::day7::file_size;
+use crate::days::day8::visible_trees;
 
 mod days;
 
@@ -45,13 +46,14 @@ fn main() {
 
     println!("Result:");
     match user_input.trim() {
-        "1" => {elf_calories(data_string);}, // Day 1
+        "1" => elf_calories(data_string), // Day 1
         "2" => rock_paper_scissor(data_string), // Day 2
         "3" => rucksack(data_string), // Day 3
         "4" => cleanup_pairs(data_string), // Day 4
         "5" => crate_crane(data_string), // Day 5
         "6" => tune_device(data_string), // Day 6
         "7" => file_size(data_string), // Day 7
+        "8" => visible_trees(data_string), // Day 8
         _ => println!("No day has been selected, try again")
     }
 }
