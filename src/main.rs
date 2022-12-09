@@ -10,6 +10,7 @@ use crate::days::day5::crate_crane;
 use crate::days::day6::tune_device;
 use crate::days::day7::file_size;
 use crate::days::day8::visible_trees;
+use crate::days::day9::rope_bridge;
 
 mod days;
 
@@ -54,6 +55,7 @@ fn main() {
         "6" => tune_device(data_string), // Day 6
         "7" => file_size(data_string), // Day 7
         "8" => visible_trees(data_string), // Day 8
-        _ => println!("No day has been selected, try again")
+        "9" => rope_bridge(data_string), // Day 9
+        _ => println!("No valid day has been selected, program quits")
     }
 }
