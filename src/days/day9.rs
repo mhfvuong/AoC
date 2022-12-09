@@ -21,21 +21,22 @@ pub fn rope_bridge(data_string: String) {
             let mut current_knot = pos_h;
             for i in 0..pos_t.len() {
                 let trailing_knot = pos_t[i];
-                let dis = distance(current_knot, trailing_knot);
-                if dis > (2 as f32).sqrt() {
+                if i > 0 { current_knot = pos_t[i - 1]; }
+                //let dis = distance(current_knot, trailing_knot);
+                if distancr(current_knot, trailing_knot) > (2 as f32).sqrt() {
                     let tx = trailing_knot[0];
                     let ty = trailing_knot[1];
                     for x in options {
                         for y in options {
-                            if distance(pos_h, [tx + x, ty + y]) == 1.0 {
+                            if distance(current_knot, [tx + x, ty + y]) == 1.0 {
                                 pos_t[i] = [tx + x, ty + y];
                             }
                         }
                     }
                 }
-                current_knot = trailing_knot;
+                // current_knot = trailing_knot;
             }
-            if positions_visited.contains(&pos_t[8]) {
+            if !positions_visited.contains(&pos_t[8]) {
                 positions_visited.push(pos_t[8]);
             }
             // println!("position of h: {:?}", &pos_h);
