@@ -22,7 +22,6 @@ pub fn rope_bridge(data_string: String) {
             for i in 0..pos_t.len() {
                 let trailing_knot = pos_t[i];
                 if i > 0 { current_knot = pos_t[i - 1]; }
-                //let dis = distance(current_knot, trailing_knot);
                 if distancr(current_knot, trailing_knot) > (2 as f32).sqrt() {
                     let tx = trailing_knot[0];
                     let ty = trailing_knot[1];
@@ -34,13 +33,10 @@ pub fn rope_bridge(data_string: String) {
                         }
                     }
                 }
-                // current_knot = trailing_knot;
             }
             if !positions_visited.contains(&pos_t[8]) {
                 positions_visited.push(pos_t[8]);
             }
-            // println!("position of h: {:?}", &pos_h);
-            // println!("position of t: {:?}", &pos_t);
         }
     }
     println!("spots visited at least once: {}", positions_visited.len());
