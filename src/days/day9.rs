@@ -1,10 +1,8 @@
-use std::collections::HashMap;
-
 pub fn rope_bridge(data_string: String) {
     let mut positions_visited: Vec<[i32; 2]> = Vec::from([[0; 2]]);
     let mut pos_t: [[i32; 2]; 9] = [[0; 2]; 9];
     let mut pos_h: [i32; 2] = [0; 2];
-    let mut current_knot: [i32; 2] = [0; 2];
+    let mut current_knot: [i32; 2];
     let options: [i32; 3] = [-1, 0, 1];
     let lines = data_string.lines();
     for line in lines {
