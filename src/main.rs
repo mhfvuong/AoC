@@ -3,6 +3,7 @@ use std::path::PathBuf;
 use std::io;
 use std::io::Read;
 use crate::days::day10::cathode_ray;
+use crate::days::day11::monkey_trouble;
 use crate::days::day1::elf_calories;
 use crate::days::day2::rock_paper_scissor;
 use crate::days::day3::rucksack;
@@ -58,6 +59,7 @@ fn main() {
         "8" => visible_trees(data_string), // Day 8
         "9" => rope_bridge(data_string), // Day 9
         "10" => cathode_ray(data_string), // Day 10
+        "11" => monkey_trouble(data_string), // Day 11
         _ => println!("No valid day has been selected, program quits")
     }
 }
