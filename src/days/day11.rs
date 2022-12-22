@@ -1,10 +1,12 @@
+use num_bigint::{BigUint, ToBigUint};
+
 struct Monkey {
-    items: Vec<u64>,
+    items: Vec<BigUint>,
     operation_type: String,
     operation_value: String,
     test: u64,
     result: [usize; 2],
-    items_inspected: u64,
+    items_inspected: BigUint,
 }
 
 impl Monkey {
@@ -13,9 +15,9 @@ impl Monkey {
             items: Vec::new(),
             operation_type: String::new(),
             operation_value: String::new(),
-            test: 1,
+            test: 0,
             result: [0; 2],
-            items_inspected: 0
+            items_inspected: 0.to_biguint().unwrap()
         }
     }
 }
@@ -35,14 +37,18 @@ pub fn monkey_trouble(data_string: String) {
                 let items = line.trim().split("items: ").collect::<Vec<&str>>()[1];
                 for item in items.split(", ").collect::<Vec<&str>>() {
                     // println!("{item}");
-                    monkeys[current_monkey - 1].items.push(item.parse::<u64>().unwrap())
+                    monkeys[current_monkey - 1].items.push(
+                        item.parse::<u64>().unwrap()
+                            .to_biguint().unwrap()
+                    )
                 }
             },
             "Operation:" => {
                 monkeys[current_monkey - 1].operation_type = information[4].to_string();
                 monkeys[current_monkey - 1].operation_value = information[5].to_string();
             } ,
-            "Test:" => monkeys[current_monkey - 1].test = information[3].parse::<u64>().unwrap(),
+            "Test:" => monkeys[current_monkey - 1].test =
+                information[3].parse::<u64>().unwrap(),
             "If" => {
                 if information[1] == "true:" { monkeys[current_monkey - 1].result[1] = information[5].parse::<usize>().unwrap();}
                 else {monkeys[current_monkey - 1].result[0] = information[5].parse::<usize>().unwrap();}
@@ -50,43 +56,34 @@ pub fn monkey_trouble(data_string: String) {
             _ => ()
         }
     }
-    for _round in 0..20 {
+    for _round in 0..10000 { // part 1 uses 20
         for n in 0..monkeys.len() {
-            for i in 0..monkeys[n].items.len() {
-                let mut item = monkeys[n].items[i];
+            for _i in 0..monkeys[n].items.len() {
+                let mut item = monkeys[n].items.remove(0);
                 let operation_value;
                 if monkeys[n].operation_value == "old" {
-                    operation_value = item
-                } else { operation_value = monkeys[n].operation_value.parse::<u64>().unwrap();}
-                if monkeys[n].operation_type == "*" { item *= operation_value; }
-                else if monkeys[n].operation_type == "+" {item += operation_value; }
-                // item /= 3; // part1: remove this one
+                    if monkeys[n].operation_type == "*" { item.pow(2);}
+                    else { item *= 2.to_biguint().unwrap(); }
+                } else {
+                    operation_value = monkeys[n].operation_value.parse::<u64>().unwrap().to_biguint().unwrap();
+                    if monkeys[n].operation_type == "*" { item *= operation_value; }
+                    else if monkeys[n].operation_type == "+" {item += operation_value; }
+                }
+                // item /= 3.to_biguint().unwrap(); // part1: uncomment this one
                 let test_result = monkeys[n].result;
-
-                // println!("throw item {}", &item);
-
-                if item % monkeys[n].test == 0 {
-                    // println!("to monkey: {}", &test_result[1]);
-                    monkeys[test_result[1]].items.push(item); }
-                else {
-                    // println!("to monkey: {}", &test_result[0]);
-                    monkeys[test_result[0]].items.push(item); }
-                monkeys[n].items_inspected += 1;
+                if item % monkeys[n].test == 0.to_biguint().unwrap() { monkeys[test_result[1]].items.push(item); }
+                else { monkeys[test_result[0]].items.push(item); }
+                monkeys[n].items_inspected += 1.to_biguint().unwrap();
             }
             monkeys[n].items.drain(..);
         }
-        // println!("monkeys hold the items after round {}", _round + 1);
-        // println!("Monkey 0: {:?}", &monkeys[0].items);
-        // println!("Monkey 1: {:?}", &monkeys[1].items);
-        // println!("Monkey 2: {:?}", &monkeys[2].items);
-        // println!("Monkey 3: {:?}", &monkeys[3].items);
     }
     let mut vec = Vec::new();
     for monkey in monkeys {
-        // println!("{}", &monkey.items_inspected);
         vec.push(monkey.items_inspected);
     }
     vec.sort();
-    let monkey_business = vec[vec.len() - 1] * vec[vec.len() - 2];
+    let length = vec.len();
+    let monkey_business = vec.remove(length - 1) * vec.remove(length - 2);
     println!("total amount of inspections: {}", monkey_business);
 }
