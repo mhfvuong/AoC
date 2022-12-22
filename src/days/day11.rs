@@ -56,10 +56,10 @@ pub fn monkey_trouble(data_string: String) {
             _ => ()
         }
     }
-    for _round in 0..10000 { // part 1 uses 20
+    for _round in 0..20 { // part 1 uses 20
         for n in 0..monkeys.len() {
             for _i in 0..monkeys[n].items.len() {
-                let mut item = monkeys[n].items.remove(0);
+                let mut item = monkeys[n].items[_i].clone();
                 let operation_value;
                 if monkeys[n].operation_value == "old" {
                     if monkeys[n].operation_type == "*" { item.pow(2);}
@@ -69,13 +69,20 @@ pub fn monkey_trouble(data_string: String) {
                     if monkeys[n].operation_type == "*" { item *= operation_value; }
                     else if monkeys[n].operation_type == "+" {item += operation_value; }
                 }
-                // item /= 3.to_biguint().unwrap(); // part1: uncomment this one
+                item /= 3.to_biguint().unwrap(); // part1: uncomment this one
                 let test_result = monkeys[n].result;
-                if item % monkeys[n].test == 0.to_biguint().unwrap() { monkeys[test_result[1]].items.push(item); }
+                if item.clone() % monkeys[n].test == 0.to_biguint().unwrap() { monkeys[test_result[1]].items.push(item); }
                 else { monkeys[test_result[0]].items.push(item); }
                 monkeys[n].items_inspected += 1.to_biguint().unwrap();
             }
             monkeys[n].items.drain(..);
+        }
+        println!("after round {}", _round + 1);
+        let mut monkey_count = 0;
+        for monkey in &monkeys {
+
+            println!("Monkey {} has items: {:?}",monkey_count, monkey.items);
+            monkey_count += 1;
         }
     }
     let mut vec = Vec::new();
@@ -84,6 +91,8 @@ pub fn monkey_trouble(data_string: String) {
     }
     vec.sort();
     let length = vec.len();
+    println!("monkeys with biggest values");
+    println!("{:?}", &vec);
     let monkey_business = vec.remove(length - 1) * vec.remove(length - 2);
     println!("total amount of inspections: {}", monkey_business);
 }
