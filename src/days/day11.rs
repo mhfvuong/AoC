@@ -63,12 +63,11 @@ pub fn monkey_trouble(data_string: String) {
         for n in 0..monkeys.len() {
             for _i in 0..monkeys[n].items.len() {
                 let mut item = monkeys[n].items[_i].clone();
-                let operation_value;
-                if monkeys[n].operation_value == "old" {
-                    operation_value = item.clone();
+                let operation_value = if monkeys[n].operation_value == "old" {
+                   item.clone()
                 } else {
-                    operation_value = monkeys[n].operation_value.parse::<u64>().unwrap().to_biguint().unwrap();
-                }
+                   monkeys[n].operation_value.parse::<u64>().unwrap().to_biguint().unwrap()
+                };
                 let test_result = monkeys[n].result;
                 if monkeys[n].operation_type == "*" {
                     item *= operation_value.to_biguint().unwrap();
@@ -84,21 +83,21 @@ pub fn monkey_trouble(data_string: String) {
             monkeys[n].items_inspected += monkeys[n].items.len();
             monkeys[n].items.drain(..);
         }
-        match _round {
-            0 => monkey_items(&monkeys, _round),
-            19 => monkey_items(&monkeys, _round),
-            999 => monkey_items(&monkeys, _round),
-            1999 => monkey_items(&monkeys, _round),
-            2999 => monkey_items(&monkeys, _round),
-            3999 => monkey_items(&monkeys, _round),
-            4999 => monkey_items(&monkeys, _round),
-            5999 => monkey_items(&monkeys, _round),
-            6999 => monkey_items(&monkeys, _round),
-            7999 => monkey_items(&monkeys, _round),
-            8999 => monkey_items(&monkeys, _round),
-            9999 => monkey_items(&monkeys, _round),
-            _ => ()
-        }
+        // match _round { // for debugging purposes
+        //     0 => monkey_items(&monkeys, _round),
+        //     19 => monkey_items(&monkeys, _round),
+        //     999 => monkey_items(&monkeys, _round),
+        //     1999 => monkey_items(&monkeys, _round),
+        //     2999 => monkey_items(&monkeys, _round),
+        //     3999 => monkey_items(&monkeys, _round),
+        //     4999 => monkey_items(&monkeys, _round),
+        //     5999 => monkey_items(&monkeys, _round),
+        //     6999 => monkey_items(&monkeys, _round),
+        //     7999 => monkey_items(&monkeys, _round),
+        //     8999 => monkey_items(&monkeys, _round),
+        //     9999 => monkey_items(&monkeys, _round),
+        //     _ => ()
+        // }
     }
     let mut vec = Vec::new();
     for monkey in monkeys {
@@ -111,9 +110,9 @@ pub fn monkey_trouble(data_string: String) {
 }
 
 // debugging
-fn monkey_items(monk: &Vec<Monkey>, rounds: usize) {
-    println!("== after round {} ==", rounds + 1);
-    for monkey in monk {
-        println!("{:?}", monkey.items_inspected);
-    }
-}
+// fn monkey_items(monk: &Vec<Monkey>, rounds: usize) {
+//     println!("== after round {} ==", rounds + 1);
+//     for monkey in monk {
+//         println!("{:?}", monkey.items_inspected);
+//     }
+// }

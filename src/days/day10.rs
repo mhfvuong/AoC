@@ -26,7 +26,7 @@ pub fn cathode_ray(data_string: String) {
         answer.push(String::new());
         for crt_char in crt_draw[i] { answer[i].push(crt_char); }
     }
-    for i in 0..answer.len() { println!("{:?}", answer[i]); }
+    for i in &answer { println!("{:?}", i); }
 }
 
 fn cycle_check(signal_strength: &mut i32, cycle: i32, register: i32, crt_draw: &mut [[char; 40]; 6]) {

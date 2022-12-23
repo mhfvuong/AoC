@@ -23,7 +23,7 @@ pub fn rope_bridge(data_string: String) {
                     current_knot = pos_t[i - 1];
                 }
                 else {current_knot = pos_h;}
-                if distance(&current_knot, &pos_t[i]) > (2 as f64).sqrt() {
+                if distance(&current_knot, &pos_t[i]) > 2_f64.sqrt() {
                     let tx = pos_t[i][0];
                     let ty = pos_t[i][1];
                     let mut next_connection_found = false;
@@ -33,7 +33,7 @@ pub fn rope_bridge(data_string: String) {
                                 pos_t[i] = [tx + x, ty + y];
                                 next_connection_found = true;
                             }
-                            if !next_connection_found && distance(&current_knot, &[tx + x, ty + y]) == (2 as f64).sqrt() {
+                            if !next_connection_found && distance(&current_knot, &[tx + x, ty + y]) == 2_f64.sqrt() {
                                    pos_t[i] = [tx + x, ty + y];
                             }
                         }

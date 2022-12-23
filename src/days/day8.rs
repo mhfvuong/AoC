@@ -2,15 +2,13 @@ pub fn visible_trees(data_string: String) {
     let lines = data_string.lines();
     let mut grid: Vec<Vec<u8>> = Vec::new();
     let mut visible_grid: Vec<Vec<bool>> = Vec::new();
-    let mut i = 0;
-    for line in lines {
+    for (i, line) in lines.enumerate() {
         grid.push(Vec::new());
         visible_grid.push(Vec::new());
         for tree in line.chars() {
             grid[i].push(tree.to_string().parse::<u8>().unwrap());
             visible_grid[i].push(false);
         }
-        i += 1;
     }
     let mut visible_trees = 0;
     let mut highest_scenic_score = 0;
