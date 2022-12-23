@@ -4,6 +4,7 @@ use std::io;
 use std::io::Read;
 use crate::days::day10::cathode_ray;
 use crate::days::day11::monkey_trouble;
+use crate::days::day12::hill_climbing;
 use crate::days::day1::elf_calories;
 use crate::days::day2::rock_paper_scissor;
 use crate::days::day3::rucksack;
@@ -27,7 +28,7 @@ fn main() {
     stdin.read_line(&mut user_input).expect(
         "Reading user input went wrong"
     );
-    if user_input.trim() == "tst".to_string() {
+    if user_input.trim() == "tst" {
         path.push("test");
     }
     else {
@@ -47,7 +48,7 @@ fn main() {
         "Something went wrong with reading the data"
     );
 
-    println!("Result:");
+    // println!("Result:");
     match user_input.trim() {
         "1" => elf_calories(data_string), // Day 1
         "2" => rock_paper_scissor(data_string), // Day 2
@@ -60,6 +61,7 @@ fn main() {
         "9" => rope_bridge(data_string), // Day 9
         "10" => cathode_ray(data_string), // Day 10
         "11" => monkey_trouble(data_string), // Day 11
-        _ => println!("No valid day has been selected, program quits")
+        "12" => hill_climbing(data_string), // Day 12
+        _ => println!("No valid day has been selected \nPlease try again next time")
     }
 }
