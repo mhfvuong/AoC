@@ -6,7 +6,7 @@ struct Monkey {
     operation_value: String,
     test: u64,
     result: [usize; 2],
-    items_inspected: BigUint,
+    items_inspected: usize,
 }
 
 impl Monkey {
@@ -17,7 +17,7 @@ impl Monkey {
             operation_value: String::new(),
             test: 0,
             result: [0; 2],
-            items_inspected: 0.to_biguint().unwrap()
+            items_inspected: 0
         }
     }
 }
@@ -36,7 +36,6 @@ pub fn monkey_trouble(data_string: String) {
             "Starting" => {
                 let items = line.trim().split("items: ").collect::<Vec<&str>>()[1];
                 for item in items.split(", ").collect::<Vec<&str>>() {
-                    // println!("{item}");
                     monkeys[current_monkey - 1].items.push(
                         item.parse::<u64>().unwrap()
                             .to_biguint().unwrap()
@@ -56,33 +55,49 @@ pub fn monkey_trouble(data_string: String) {
             _ => ()
         }
     }
-    for _round in 0..20 { // part 1 uses 20
+    let mut lcm = 1.to_biguint().unwrap();
+    for monk in &monkeys {
+        lcm *= monk.test;
+    }
+    for _round in 0..10_000 { // part 1 uses 20
         for n in 0..monkeys.len() {
             for _i in 0..monkeys[n].items.len() {
                 let mut item = monkeys[n].items[_i].clone();
                 let operation_value;
                 if monkeys[n].operation_value == "old" {
-                    if monkeys[n].operation_type == "*" { item.pow(2);}
-                    else { item *= 2.to_biguint().unwrap(); }
+                    operation_value = item.clone();
                 } else {
                     operation_value = monkeys[n].operation_value.parse::<u64>().unwrap().to_biguint().unwrap();
-                    if monkeys[n].operation_type == "*" { item *= operation_value; }
-                    else if monkeys[n].operation_type == "+" {item += operation_value; }
                 }
-                item /= 3.to_biguint().unwrap(); // part1: uncomment this one
                 let test_result = monkeys[n].result;
+                if monkeys[n].operation_type == "*" {
+                    item *= operation_value.to_biguint().unwrap();
+                }
+                else if monkeys[n].operation_type == "+" {
+                    item += operation_value.to_biguint().unwrap();
+                }
+                item %= lcm.clone();
+                // item /= 3.to_biguint().unwrap(); // part1: uncomment this one
                 if item.clone() % monkeys[n].test == 0.to_biguint().unwrap() { monkeys[test_result[1]].items.push(item); }
                 else { monkeys[test_result[0]].items.push(item); }
-                monkeys[n].items_inspected += 1.to_biguint().unwrap();
             }
+            monkeys[n].items_inspected += monkeys[n].items.len();
             monkeys[n].items.drain(..);
         }
-        println!("after round {}", _round + 1);
-        let mut monkey_count = 0;
-        for monkey in &monkeys {
-
-            println!("Monkey {} has items: {:?}",monkey_count, monkey.items);
-            monkey_count += 1;
+        match _round {
+            0 => monkey_items(&monkeys, _round),
+            19 => monkey_items(&monkeys, _round),
+            999 => monkey_items(&monkeys, _round),
+            1999 => monkey_items(&monkeys, _round),
+            2999 => monkey_items(&monkeys, _round),
+            3999 => monkey_items(&monkeys, _round),
+            4999 => monkey_items(&monkeys, _round),
+            5999 => monkey_items(&monkeys, _round),
+            6999 => monkey_items(&monkeys, _round),
+            7999 => monkey_items(&monkeys, _round),
+            8999 => monkey_items(&monkeys, _round),
+            9999 => monkey_items(&monkeys, _round),
+            _ => ()
         }
     }
     let mut vec = Vec::new();
@@ -91,8 +106,14 @@ pub fn monkey_trouble(data_string: String) {
     }
     vec.sort();
     let length = vec.len();
-    println!("monkeys with biggest values");
-    println!("{:?}", &vec);
     let monkey_business = vec.remove(length - 1) * vec.remove(length - 2);
     println!("total amount of inspections: {}", monkey_business);
+}
+
+// debugging
+fn monkey_items(monk: &Vec<Monkey>, rounds: usize) {
+    println!("== after round {} ==", rounds + 1);
+    for monkey in monk {
+        println!("{:?}", monkey.items_inspected);
+    }
 }
