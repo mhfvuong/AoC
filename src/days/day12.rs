@@ -55,6 +55,7 @@ pub fn hill_climbing(data_string: String) {
     let mut graph = Graph::new();
     let mut start: usize = 0;
     let mut end: usize = 0;
+    let mut a_list = Vec::new(); // part 2
     let mut path_to = vec![Vec::new()];
     for (i, line) in lines.enumerate() {
         if i == graph.map.len() {
@@ -74,6 +75,7 @@ pub fn hill_climbing(data_string: String) {
                 graph.map[i].push(String::from('z').as_bytes()[0]);
             }
             else {
+                if h == 'a' { a_list.push(n + i * graph.map[0].len());} // part 2
                 graph.map[i].push(h.to_string().as_bytes()[0]);
             }
             n += 1;
@@ -98,7 +100,12 @@ pub fn hill_climbing(data_string: String) {
                     let hn = n_bors / graph.map[0].len();
                     let wn = n_bors % graph.map[0].len();
                     if path_to[hn][wn] == -1 || path < path_to[hn][wn] {
-                        path_to[hn][wn] = path;
+                        if a_list.contains(n_bors) { // part 2
+                            path_to[hn][wn] = 0;
+                        }
+                        else { // end part 2
+                            path_to[hn][wn] = path;
+                        }
                         graph.queue.push(*n_bors);
                     }
                 }
