@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn day_01_1(data_string: String){
+pub fn day_01a(data_string: String){
     let lines = data_string.lines();
 
     let mut numbers = Vec::new();
@@ -27,7 +27,7 @@ pub fn day_01_1(data_string: String){
     print!("{sum}")
 }
 
-pub fn day_01_2(data_string: String){
+pub fn day_01b(data_string: String){
     let lines = data_string.lines();
 
     let mut numbers = Vec::new();
