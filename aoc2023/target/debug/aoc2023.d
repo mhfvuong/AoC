@@ -1,1 +1,1 @@
-/home/mvuong/Documents/AoC/aoc2023/target/debug/aoc2023: /home/mvuong/Documents/AoC/aoc2023/src/data_days/day_01.rs /home/mvuong/Documents/AoC/aoc2023/src/data_days/mod.rs /home/mvuong/Documents/AoC/aoc2023/src/main.rs
+/home/mvuong/Documents/AoC/aoc2023/target/debug/aoc2023: /home/mvuong/Documents/AoC/aoc2023/src/data_days/day_01.rs /home/mvuong/Documents/AoC/aoc2023/src/data_days/day_02.rs /home/mvuong/Documents/AoC/aoc2023/src/data_days/mod.rs /home/mvuong/Documents/AoC/aoc2023/src/main.rs
