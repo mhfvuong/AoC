@@ -28,8 +28,6 @@ pub fn day_01_1(data_string: String){
 }
 
 pub fn day_01_2(data_string: String){
-    // let mut debug_line = 0;
-
     let lines = data_string.lines();
 
     let mut numbers = Vec::new();
@@ -40,7 +38,6 @@ pub fn day_01_2(data_string: String){
     let words = "one two three four five six seven eight nine";
 
     for line in lines{
-        // debug_line += 1;
         let mut first_number= String::new();
         let mut last_number = String::new();
         let mut word_slider = String::new();
@@ -55,10 +52,6 @@ pub fn day_01_2(data_string: String){
             }
             else {
                 word_slider.push(letter);
-                // println!("{}", &word_slider);
-                // if debug_line >= 17 {
-                //     println!("problem line")
-                // }
 
                 if words.contains(&word_slider) {
                     if number_as_words.contains_key(&*word_slider) {
