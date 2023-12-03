@@ -1,4 +1,4 @@
-pub fn day_02a(data_string: String){
+pub fn day_02ab(data_string: String){
     let lines = data_string.lines();
     let mut game_counter = 0;
     let mut possible_games = 0;
