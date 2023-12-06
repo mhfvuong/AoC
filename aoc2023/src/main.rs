@@ -6,7 +6,7 @@ mod data_days;
 fn main() {
     // let mut user_input = String::new();
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("src/data_days/tst.txt");
+    path.push("src/data_days/data_05.txt");
 
     let mut data_file = File::open(&path).unwrap();
     let mut data_string = String::new();

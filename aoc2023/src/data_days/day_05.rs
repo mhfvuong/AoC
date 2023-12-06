@@ -3,23 +3,18 @@ use std::collections::HashMap;
 pub fn day_05(data_string: String){
     let lines = data_string.lines();
     let mut seeds = Vec::new();
-    let mut seeds_ranges = Vec::new();
+    // let mut seeds_ranges = Vec::new();
     let mut map = "";
     // let mut dsr_map = Vec::new();
     let mut changed_seeds = Vec::new();
     // let mut map_num = Vec::new();
-    let mut change_idx = Vec::new();
+    // let mut change_idx = Vec::new();
     for line in lines {
         let map_num = line.split(":").collect::<Vec<&str>>();
         match map_num[0] {
             "seeds" => {
-                // println!("{}", &map_num[1].len());
-                let all_seeds = chars_to_vec(&map_num[1]);
-                for i in 0..all_seeds.len(){
-                    if i % 2 != 0 { seeds_ranges.push(all_seeds[i]);}
-                    else {seeds.push(all_seeds[i]);}
-                }
-                // for i in seeds {changed_seeds.insert(i, false);}
+                seeds = chars_to_vec(&map_num[1]);
+
                 println!("finding seeds:");
                 println!("{:?}", &seeds);
             },
@@ -55,16 +50,9 @@ pub fn day_05(data_string: String){
                 } else if some_map == "" {
                     println!("empty line!");
                     map = "";
-                    for cs in &changed_seeds {
-                        seeds.push(*cs);
+                    for _cs in 0..changed_seeds.len() {
+                        seeds.push(changed_seeds.remove(0));
                     }
-                    change_idx.sort();
-                    change_idx.reverse();
-                    for idx in change_idx {
-                        seeds.remove(idx);
-                    }
-                    change_idx = Vec::new();
-                    changed_seeds = Vec::new();
                     println!("seeds: {:?}", &seeds);
                     // continue;
                 }
@@ -73,42 +61,72 @@ pub fn day_05(data_string: String){
         // let mut dsr = Vec::new();
         if map != "" {
             let dsr = chars_to_vec(&map_num[0]);
-
-            for i in 0..seeds.len(){
+            let mut i = 0;
+            while i < seeds.len() {
+            // for i in 0..seeds.len(){
+            //     println!("unchanged seeds + range: {:?}", &seeds);
                 // check if the seed is in range
-                let sr = seeds[i] + seeds_ranges[i];
-                // check for either upper limit or lower limit or middle
-                if seeds[i] < dsr[1] + dsr[2] && seeds[i] >= dsr[1]{}
-                else if sr < dsr[1] + dsr[2] && sr >= dsr[1] {}
-                else if seeds[i] < dsr[1] && dsr[2] < seeds_ranges[i] {}
-                else if dsr[1] <= seeds[i] && seeds_ranges[i] < dsr[1] + dsr[2]{
+                let seed_low = seeds.remove(0);
+                let seed_range = seeds.remove(0);
+                let seed_high = seed_low + seed_range - 1;
 
-                    let difference = dsr[0] - dsr[1];
-                    let abs_diff = difference.abs();
-                    let mut change = 0;
-                    if difference > 0 { change = seeds[i] + abs_diff; } else { change = seeds[i] - abs_diff; }
-                    // unchanged = false;
-                    if !changed_seeds.contains(&change){
-                        changed_seeds.push(change);
-                        change_idx.push(i);
-                        println!("CHANGE {} to {}", &seeds[i],&change);
-                    }
+                let change = dsr[0] - dsr[1];
+                let map_low = dsr[1];
+                let map_high = dsr[2] + dsr[1] - 1;
+                println!("checking for seed {} - {} with range {}", &seed_low, &seed_high, &seed_range);
+                println!("checking to map {} - {}", &map_low, map_high);
+                if seed_low >= dsr[1] && seed_high < dsr[1] + dsr[2] {
+                    // complete seed range is inside the map: change the whole range
+                    // println!("checking to map the range {} - {}", map_low, map_high);
+                    println!("changing by {}", &change);
+                    println!("changing all seeds from {} to {}", &seed_low, &seed_high);
+                    changed_seeds.push(seed_low + change);
+                    changed_seeds.push(seed_range);
                 }
+                else if (seed_low >= dsr[1] && seed_low < dsr[1] + dsr[2]) || // lower half is in the range
+                    (seed_high >= dsr[1] && seed_high < dsr[1] + dsr[2]) || // upper half is in the range
+                    (dsr[1] >= seed_low && dsr[1] + dsr[2] < seed_high) { // middle is in the range
+                    // only the lowest x seed is inside the map range
+                    // println!("checking to map the range {} - {}", map_low, map_high);
+                    println!("changing by {}", &change);
+                    let (new_seeds, old_seeds) = seeds_splitter(seed_low, seed_range, dsr[1], dsr[2], change);
+                    for s in old_seeds{seeds.push(s);}
+                    for s in new_seeds{changed_seeds.push(s);}
+                }
+
+                else { // None of the seeds are inside the map range
+                    println!("no seeds changed");
+                    seeds.push(seed_low);
+                    seeds.push(seed_range);
+                }
+
+                i += 2;
             }
-            println!("new seed locations: {:?}", &changed_seeds);
+
+            // println!("new seed locations: {:?}", &changed_seeds);
         }
     }
     for cs in &changed_seeds {
         seeds.push(*cs);
     }
-    change_idx.sort();
-    change_idx.reverse();
-    for idx in change_idx {
-        seeds.remove(idx);
+    // println!("final seeds: {:?}", &seeds);
+
+    let mut i = seeds.len() - 1;
+    while i > 0 {
+        let removed = seeds.remove(i);
+        // println!("removed range: {removed}");
+        if i > 1 {
+            i -= 2;
+        }
+        else {
+            i = 0;
+        }
     }
     seeds.sort();
+    // println!("lowest seeds per range pair\
+    // : {:?}", &seeds);
     println!("closest seed: {}", seeds[0]);
-    println!("seed ranges: {:?}", seeds_ranges);
+    // println!("seed ranges: {:?}", seeds_ranges);
 }
 
 fn chars_to_vec(characters: &str) -> Vec<i64> {
@@ -130,15 +148,44 @@ fn chars_to_vec(characters: &str) -> Vec<i64> {
     return final_vec;
 }
 
-pub fn seeds_splitter (seed: i64, seed_range: i64, source: i64, source_rage: i64) -> Vec<i64> {
-    let mut seed_splits = Vec::new();
-    let cut_off = source + source_rage;
-    let total_seed_range = seed + seed_range;
-    let seed_range_1 = cut_off - seed;
-    let seed_range_2 = total_seed_range - cut_off;
-    seed_splits.push(seed);
-    seed_splits.push(seed_range_1);
-    seed_splits.push(cut_off);
-    seed_splits.push(seed_range_2);
-    return seed_splits;
+pub fn seeds_splitter (seed_low: i64, seed_range: i64, source: i64, source_rage: i64, change: i64) -> (Vec<i64>, Vec<i64>){
+    let mut seeds_changed = Vec::new();
+    let mut seeds_unchanged = Vec::new();
+    let seed_upper = seed_low + seed_range - 1;
+    let cut_off = source + source_rage - 1;
+
+    if seed_low >= source && seed_low <= cut_off {
+        println!("changing the seeds {} - {}", &seed_low, &cut_off);
+        println!("from the range: {} - {}", &seed_low, &seed_upper);
+        println!("change A");
+        seeds_changed.push(seed_low + change);
+        let new_range = cut_off - seed_low + 1;
+        seeds_changed.push(new_range);
+        seeds_unchanged.push(cut_off + 1);
+        seeds_unchanged.push(seed_range - new_range);
+    }
+    else if seed_upper >= source && seed_upper <= cut_off {
+        println!("changing the seeds {} - {}", &source, &seed_upper);
+        println!("from the range: {} - {}", &seed_low, &seed_upper);
+        println!("change B");
+        seeds_changed.push(source + change);
+        seeds_changed.push(seed_upper - source + 1);
+        seeds_unchanged.push(seed_low);
+        seeds_unchanged.push(source - seed_low);
+    }
+    else if seed_low < source && cut_off < seed_upper {
+        println!("changing the seeds {} - {}", &source, &cut_off);
+        println!("from the range: {} - {}", &seed_low, &seed_upper);
+        println!("change C");
+        seeds_changed.push(source + change);
+        seeds_changed.push(cut_off);
+        seeds_unchanged.push(seed_low);
+        seeds_unchanged.push(source - seed_low);
+        seeds_unchanged.push(cut_off + 1);
+        seeds_unchanged.push(seed_upper - cut_off);
+    }
+    println!("new seeds: {:?}", seeds_changed);
+    println!("unchanged: {:?}", seeds_unchanged);
+
+    return (seeds_changed, seeds_unchanged);
 }
