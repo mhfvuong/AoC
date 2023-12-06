@@ -1,14 +1,8 @@
-use std::collections::HashMap;
-
 pub fn day_05(data_string: String){
     let lines = data_string.lines();
     let mut seeds = Vec::new();
-    // let mut seeds_ranges = Vec::new();
     let mut map = "";
-    // let mut dsr_map = Vec::new();
     let mut changed_seeds = Vec::new();
-    // let mut map_num = Vec::new();
-    // let mut change_idx = Vec::new();
     for line in lines {
         let map_num = line.split(":").collect::<Vec<&str>>();
         match map_num[0] {
@@ -54,16 +48,14 @@ pub fn day_05(data_string: String){
                         seeds.push(changed_seeds.remove(0));
                     }
                     println!("seeds: {:?}", &seeds);
-                    // continue;
                 }
             },
         }
-        // let mut dsr = Vec::new();
+
         if map != "" {
             let dsr = chars_to_vec(&map_num[0]);
             let mut i = 0;
             while i < seeds.len() {
-            // for i in 0..seeds.len(){
             //     println!("unchanged seeds + range: {:?}", &seeds);
                 // check if the seed is in range
                 let seed_low = seeds.remove(0);
@@ -113,8 +105,8 @@ pub fn day_05(data_string: String){
 
     let mut i = seeds.len() - 1;
     while i > 0 {
-        let removed = seeds.remove(i);
-        // println!("removed range: {removed}");
+        let _removed = seeds.remove(i);
+        // println!("removed range: {_removed}");
         if i > 1 {
             i -= 2;
         }
