@@ -47,7 +47,7 @@ pub fn day_05(data_string: String){
                     for _cs in 0..changed_seeds.len() {
                         seeds.push(changed_seeds.remove(0));
                     }
-                    println!("seeds: {:?}", &seeds);
+                    // println!("seeds: {:?}", &seeds);
                 }
             },
         }
