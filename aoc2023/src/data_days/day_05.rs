@@ -9,37 +9,37 @@ pub fn day_05(data_string: String){
             "seeds" => {
                 seeds = chars_to_vec(&map_num[1]);
 
-                println!("finding seeds:");
-                println!("{:?}", &seeds);
+                // println!("finding seeds:");
+                // println!("{:?}", &seeds);
             },
             some_map => {
                 if some_map == "seed-to-soil map"{
                     map = "sts";
-                    println!("map 1");
+                    println!("{some_map}");
                     continue;
                 } else if some_map == "soil-to-fertilizer map" {
                     map = "stf";
-                    println!("map 2");
+                    println!("{some_map}");
                     continue;
                 } else if some_map == "fertilizer-to-water map" {
                     map = "ftw";
-                    println!("map 3");
+                    println!("{some_map}");
                     continue;
                 } else if some_map == "water-to-light map" {
                     map = "wtl";
-                    println!("map 4");
+                    println!("{some_map}");
                     continue;
                 } else if some_map =="light-to-temperature map" {
                     map = "ltt";
-                    println!("map 5");
+                    println!("{some_map}");
                     continue;
                 }else if some_map == "temperature-to-humidity map" {
                     map = "tth";
-                    println!("map 6");
+                    println!("{some_map}");
                     continue;
                 } else if some_map == "humidity-to-location map" {
                     map = "htl";
-                    println!("map final");
+                    println!("{some_map}");
                     continue;
                 } else if some_map == "" {
                     println!("empty line!");
@@ -54,8 +54,11 @@ pub fn day_05(data_string: String){
 
         if map != "" {
             let dsr = chars_to_vec(&map_num[0]);
-            let mut i = 0;
-            while i < seeds.len() {
+            let mut pairs_to_check = seeds.len()/2;
+            // let mut i = 0;
+            while pairs_to_check > 0 {
+                println!("pairs to check: {}", &pairs_to_check);
+
             //     println!("unchanged seeds + range: {:?}", &seeds);
                 // check if the seed is in range
                 let seed_low = seeds.remove(0);
@@ -65,8 +68,7 @@ pub fn day_05(data_string: String){
                 let change = dsr[0] - dsr[1];
                 let map_low = dsr[1];
                 let map_high = dsr[2] + dsr[1] - 1;
-                println!("checking for seed {} - {} with range {}", &seed_low, &seed_high, &seed_range);
-                println!("checking to map {} - {}", &map_low, map_high);
+                println!("check if seeds {} - {} fit on map range {} - {}", &seed_low, &seed_high, &map_low, map_high);
                 if seed_low >= dsr[1] && seed_high < dsr[1] + dsr[2] {
                     // complete seed range is inside the map: change the whole range
                     // println!("checking to map the range {} - {}", map_low, map_high);
@@ -74,6 +76,9 @@ pub fn day_05(data_string: String){
                     println!("changing all seeds from {} to {}", &seed_low, &seed_high);
                     changed_seeds.push(seed_low + change);
                     changed_seeds.push(seed_range);
+                    pairs_to_check -= 1;
+                    // println!("changed seeds:  {:?}", &changed_seeds);
+                    // println!("seeds to check: {:?}", &seeds);
                 }
                 else if (seed_low >= dsr[1] && seed_low < dsr[1] + dsr[2]) || // lower half is in the range
                     (seed_high >= dsr[1] && seed_high < dsr[1] + dsr[2]) || // upper half is in the range
@@ -82,6 +87,8 @@ pub fn day_05(data_string: String){
                     // println!("checking to map the range {} - {}", map_low, map_high);
                     println!("changing by {}", &change);
                     let (new_seeds, old_seeds) = seeds_splitter(seed_low, seed_range, dsr[1], dsr[2], change);
+                    if old_seeds.len() > 2 {pairs_to_check += 1;}
+                    else {pairs_to_check -= 1;}
                     for s in old_seeds{seeds.push(s);}
                     for s in new_seeds{changed_seeds.push(s);}
                 }
@@ -90,11 +97,10 @@ pub fn day_05(data_string: String){
                     println!("no seeds changed");
                     seeds.push(seed_low);
                     seeds.push(seed_range);
+                    pairs_to_check -= 1;
                 }
 
-                i += 2;
             }
-
             // println!("new seed locations: {:?}", &changed_seeds);
         }
     }
@@ -102,8 +108,14 @@ pub fn day_05(data_string: String){
         seeds.push(*cs);
     }
     // println!("final seeds: {:?}", &seeds);
-
+    let mut n = 0;
+    // println!("printing seed and range pair:");
+    // while n < seeds.len(){
+    //     println!("seed: {} range: {}", &seeds[n], &seeds[n+1]);
+    //     n += 2;
+    // }
     let mut i = seeds.len() - 1;
+    // println!("{}", seeds.len());
     while i > 0 {
         let _removed = seeds.remove(i);
         // println!("removed range: {_removed}");
@@ -140,15 +152,15 @@ fn chars_to_vec(characters: &str) -> Vec<i64> {
     return final_vec;
 }
 
-pub fn seeds_splitter (seed_low: i64, seed_range: i64, source: i64, source_rage: i64, change: i64) -> (Vec<i64>, Vec<i64>){
+fn seeds_splitter (seed_low: i64, seed_range: i64, source: i64, source_range: i64, change: i64) -> (Vec<i64>, Vec<i64>){
     let mut seeds_changed = Vec::new();
     let mut seeds_unchanged = Vec::new();
     let seed_upper = seed_low + seed_range - 1;
-    let cut_off = source + source_rage - 1;
+    let cut_off = source + source_range - 1;
 
     if seed_low >= source && seed_low <= cut_off {
         println!("changing the seeds {} - {}", &seed_low, &cut_off);
-        println!("from the range: {} - {}", &seed_low, &seed_upper);
+        // println!("from the range: {} - {}", &seed_low, &seed_upper);
         println!("change A");
         seeds_changed.push(seed_low + change);
         let new_range = cut_off - seed_low + 1;
@@ -158,7 +170,7 @@ pub fn seeds_splitter (seed_low: i64, seed_range: i64, source: i64, source_rage:
     }
     else if seed_upper >= source && seed_upper <= cut_off {
         println!("changing the seeds {} - {}", &source, &seed_upper);
-        println!("from the range: {} - {}", &seed_low, &seed_upper);
+        // println!("from the range: {} - {}", &seed_low, &seed_upper);
         println!("change B");
         seeds_changed.push(source + change);
         seeds_changed.push(seed_upper - source + 1);
@@ -167,17 +179,17 @@ pub fn seeds_splitter (seed_low: i64, seed_range: i64, source: i64, source_rage:
     }
     else if seed_low < source && cut_off < seed_upper {
         println!("changing the seeds {} - {}", &source, &cut_off);
-        println!("from the range: {} - {}", &seed_low, &seed_upper);
+        // println!("from the range: {} - {}", &seed_low, &seed_upper);
         println!("change C");
         seeds_changed.push(source + change);
-        seeds_changed.push(cut_off);
+        seeds_changed.push(source_range);
         seeds_unchanged.push(seed_low);
         seeds_unchanged.push(source - seed_low);
         seeds_unchanged.push(cut_off + 1);
         seeds_unchanged.push(seed_upper - cut_off);
     }
-    println!("new seeds: {:?}", seeds_changed);
-    println!("unchanged: {:?}", seeds_unchanged);
+    // println!("new seeds: {:?}", seeds_changed);
+    // println!("unchanged: {:?}", seeds_unchanged);
 
     return (seeds_changed, seeds_unchanged);
 }
