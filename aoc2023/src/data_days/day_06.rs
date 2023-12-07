@@ -26,22 +26,14 @@ pub fn day_06(data_string: String){
     let mut winning_possibilities = Vec::new();
     for n in 0..times.len() {
         let t = times[n];
-        // let mut speed = 0;
         let mut wins = 0;
         for i in 0..t+1 {
-            // println!("holding the button down for {} milliseconds", &i);
             let time_left = t - i;
-            // println!("the boat will go for {} milliseconds", &time_left);
             let distance = i * time_left;
-            // println!("it will travel {} millimeters", &distance);
-
             if distance > distances[n]{
-                // println!("we beat {} millimeter", &distances[n]);
                 wins += 1;
             }
-            // speed += 1;
         }
-        // println!("we got {} wins!", &wins);
         winning_possibilities.push(wins);
     }
     let mut possibilities = 1;
@@ -54,7 +46,6 @@ pub fn day_06(data_string: String){
         let time_left = big_time - i;
         let distance = i * time_left;
         if distance > big_distance {
-            // println!("{}", &i);
             big_win += 1;
         }
     }

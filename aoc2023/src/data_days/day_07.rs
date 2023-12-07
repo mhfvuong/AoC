@@ -1,4 +1,3 @@
-use std::any::Any;
 use std::collections::HashMap;
 use std::hash::Hash;
 
@@ -8,10 +7,7 @@ pub fn day_07(data_string: String){
     let mut bids = Vec::new();
     let mut hands_rank = HashMap::new();
     let mut hands_type = HashMap::new();
-    // let card_rank = HashMap::from([
-    //     ("A", 14), ("K", 13), ("Q", 12), ("J", 11), ("T", 10), ("9", 9), ("8", 8),
-    //     ("7", 7), ("6", 6), ("5", 5), ("4", 4), ("3", 3), ("2", 2)
-    // ]);
+
     for line in lines{
         let hand_bid = line.split(" ").collect::<Vec<&str>>();
         hands.push(hand_bid[0]);
@@ -97,20 +93,6 @@ pub fn day_07(data_string: String){
 
             continue;
         }
-        // if hands_to_be_checked.len() == 1 {
-        //     println!("There is only one hand with {}", &type_to_be_checked[type_idx]);
-        //     if let Some(rank) = hands_rank.get_mut(hands_to_be_checked[0]) {
-        //         *rank += hands_checked;
-        //         hands_checked += 1;
-        //         type_idx += 1;
-        //     }
-        //     continue;
-        // }
-        // if hands_to_be_checked.is_empty() {
-        //     println!("There is no {}", &type_to_be_checked[type_idx]);
-        //     type_idx += 1;
-        //     continue;
-        // }
         let mut n = 0;
         // println!("there are {} cards with {}", &hands_to_be_checked.len(), &type_to_be_checked[type_idx]);
         while n < hands_to_be_checked.len() { // compare each hand with one another
@@ -142,10 +124,6 @@ pub fn day_07(data_string: String){
 }
 
 fn compare(hand_a: &str, hand_b: &str, hands_rank: &mut HashMap<&str, usize> ) {
-    let mut card_rank = HashMap::from([
-        ("A", 14), ("K", 13), ("Q", 12), ("J", 11), ("T", 10), ("9", 9), ("8", 8),
-        ("7", 7), ("6", 6), ("5", 5), ("4", 4), ("3", 3), ("2", 2)
-    ]);
     let mut rank_determined = false;
     for i in 0..5 {
         if !rank_determined {
@@ -204,6 +182,5 @@ fn change_hand_type(cards: &HashMap<char, i32>, card: &char, hands_type: &mut Ha
             *hand_type = "Five of a kind";
         }},
         _ => (),
-        // None => ()
     }
 }

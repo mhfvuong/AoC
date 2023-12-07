@@ -4,50 +4,50 @@ fn check_adjacent(n: usize, m: usize, schematic: &Vec<Vec<char>>) -> bool {
     // check corners
     if n > 0 && m > 0 {
         if !schematic[n - 1][m - 1].is_numeric() && schematic[n - 1][m - 1] != '.' {
-            println!("found adjacent: {}", schematic[n-1][m-1]);
+            // println!("found adjacent: {}", schematic[n-1][m-1]);
             return true;
         }
     }
     if n > 0 && m < (schematic[0].len()-1) {
         if !schematic[n - 1][m + 1].is_numeric() && schematic[n - 1][m + 1] != '.' {
-            println!("found adjacent: {}", schematic[n-1][m+1]);
+            // println!("found adjacent: {}", schematic[n-1][m+1]);
             return true;
         }
     }
     if m > 0 && n < (schematic[0].len()-1) {
         if !schematic[n + 1][m - 1].is_numeric() && schematic[n + 1][m - 1] != '.' {
-            println!("found adjacent: {}", schematic[n+1][m-1]);
+            // println!("found adjacent: {}", schematic[n+1][m-1]);
             return true;
         }
     }
     if n < (schematic[0].len()-1) && m < (schematic[0].len()-1) {
         if !schematic[n + 1][m + 1].is_numeric() && schematic[n + 1][m + 1] != '.' {
-            println!("found adjacent: {}", schematic[n+1][m+1]);
+            // println!("found adjacent: {}", schematic[n+1][m+1]);
             return true;
         }
     }
     //check edges
     if m > 0 {
         if !schematic[n][m-1].is_numeric() && schematic[n][m-1] != '.'{
-            println!("found adjacent: {}", schematic[n][m-1]);
+            // println!("found adjacent: {}", schematic[n][m-1]);
             return true;
         }
     }
     if m < (schematic[0].len()-1) {
         if !schematic[n][m+1].is_numeric() && schematic[n][m+1] != '.'{
-            println!("found adjacent: {}", schematic[n][m+1]);
+            // println!("found adjacent: {}", schematic[n][m+1]);
             return true;
         }
     }
     if n < (schematic[0].len()-1) {
         if !schematic[n+1][m].is_numeric() && schematic[n+1][m] != '.'{
-            println!("found adjacent: {}", schematic[n+1][m]);
+            // println!("found adjacent: {}", schematic[n+1][m]);
             return true;
         }
     }
     if n > 0 {
         if !schematic[n-1][m].is_numeric() && schematic[n-1][m] != '.'{
-            println!("found adjacent: {}", schematic[n-1][m]);
+            // println!("found adjacent: {}", schematic[n-1][m]);
             return true;
         }
     }
@@ -58,50 +58,50 @@ fn find_gear(n: usize, m: usize, schematic: &Vec<Vec<char>>) -> (bool,usize,usiz
     // check corners
     if n > 0 && m > 0 {
         if !schematic[n - 1][m - 1].is_numeric() && schematic[n - 1][m - 1] == '*' {
-            println!("found adjacent: {}", schematic[n-1][m-1]);
+            // println!("found adjacent: {}", schematic[n-1][m-1]);
             return (true, n - 1, m - 1);
         }
     }
     if n > 0 && m < (schematic[0].len()-1) {
         if !schematic[n - 1][m + 1].is_numeric() && schematic[n - 1][m + 1] == '*' {
-            println!("found adjacent: {}", schematic[n-1][m+1]);
+            // println!("found adjacent: {}", schematic[n-1][m+1]);
             return (true, n - 1, m + 1);
         }
     }
     if m > 0 && n < (schematic[0].len()-1) {
         if !schematic[n + 1][m - 1].is_numeric() && schematic[n + 1][m - 1] == '*' {
-            println!("found adjacent: {}", schematic[n+1][m-1]);
+            // println!("found adjacent: {}", schematic[n+1][m-1]);
             return (true, n + 1, m - 1);
         }
     }
     if n < (schematic[0].len()-1) && m < (schematic[0].len()-1) {
         if !schematic[n + 1][m + 1].is_numeric() && schematic[n + 1][m + 1] == '*' {
-            println!("found adjacent: {}", schematic[n+1][m+1]);
+            // println!("found adjacent: {}", schematic[n+1][m+1]);
             return (true, n + 1, m + 1);
         }
     }
     //check edges
     if m > 0 {
         if !schematic[n][m-1].is_numeric() && schematic[n][m-1] == '*'{
-            println!("found adjacent: {}", schematic[n][m-1]);
+            // println!("found adjacent: {}", schematic[n][m-1]);
             return (true, n, m - 1);
         }
     }
     if m < (schematic[0].len()-1) {
         if !schematic[n][m+1].is_numeric() && schematic[n][m+1] == '*'{
-            println!("found adjacent: {}", schematic[n][m+1]);
+            // println!("found adjacent: {}", schematic[n][m+1]);
             return (true, n, m + 1);
         }
     }
     if n < (schematic[0].len()-1) {
         if !schematic[n+1][m].is_numeric() && schematic[n+1][m] == '*'{
-            println!("found adjacent: {}", schematic[n+1][m]);
+            // println!("found adjacent: {}", schematic[n+1][m]);
             return (true, n + 1, m);
         }
     }
     if n > 0 {
         if !schematic[n-1][m].is_numeric() && schematic[n-1][m] == '*'{
-            println!("found adjacent: {}", schematic[n-1][m]);
+            // println!("found adjacent: {}", schematic[n-1][m]);
             return (true, n -1, m);
         }
     }
@@ -132,7 +132,6 @@ pub fn day_03ab(data_string: String){
         for m in 0..schematic[0].len() {
             if schematic[n][m].is_numeric() {
                 number.push(schematic[n][m]);
-                // println!("{}", &number);
                 if !adjacent{
                     adjacent = check_adjacent(n, m, &schematic);
                 }
@@ -186,7 +185,6 @@ pub fn day_03ab(data_string: String){
             gear_found = false;
         }
     }
-
     for gears in gear_ratios.keys(){
         match gear_ratios.get(gears){
             None => (),
@@ -198,8 +196,6 @@ pub fn day_03ab(data_string: String){
             }
         }
     }
-
     println!("schematic sum {}", tot_number);
     println!("gear product {}", gear_sum);
-
 }

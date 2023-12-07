@@ -16,7 +16,6 @@ pub fn day_02ab(data_string: String){
         let mut min_g = 0;
         let mut min_b = 0;
         for hand in bag{
-            // while possible{
             let cubes = hand.split(", ").collect::<Vec<&str>>();
             for color in cubes{
                 let num_color = color.split(" ").collect::<Vec<&str>>();
@@ -35,7 +34,6 @@ pub fn day_02ab(data_string: String){
                     if num > &min_b {min_b = *num;}
                 }
             }
-            // }
         }
         let power = min_r * min_g * min_b;
         println!("power of this set is:{}", &power);

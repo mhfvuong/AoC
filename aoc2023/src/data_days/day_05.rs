@@ -8,9 +8,6 @@ pub fn day_05(data_string: String){
         match map_num[0] {
             "seeds" => {
                 seeds = chars_to_vec(&map_num[1]);
-
-                // println!("finding seeds:");
-                // println!("{:?}", &seeds);
             },
             some_map => {
                 if some_map == "seed-to-soil map"{
@@ -47,7 +44,6 @@ pub fn day_05(data_string: String){
                     for _cs in 0..changed_seeds.len() {
                         seeds.push(changed_seeds.remove(0));
                     }
-                    // println!("seeds: {:?}", &seeds);
                 }
             },
         }
@@ -55,11 +51,9 @@ pub fn day_05(data_string: String){
         if map != "" {
             let dsr = chars_to_vec(&map_num[0]);
             let mut pairs_to_check = seeds.len()/2;
-            // let mut i = 0;
             while pairs_to_check > 0 {
                 println!("pairs to check: {}", &pairs_to_check);
 
-            //     println!("unchanged seeds + range: {:?}", &seeds);
                 // check if the seed is in range
                 let seed_low = seeds.remove(0);
                 let seed_range = seeds.remove(0);
@@ -71,20 +65,16 @@ pub fn day_05(data_string: String){
                 println!("check if seeds {} - {} fit on map range {} - {}", &seed_low, &seed_high, &map_low, map_high);
                 if seed_low >= dsr[1] && seed_high < dsr[1] + dsr[2] {
                     // complete seed range is inside the map: change the whole range
-                    // println!("checking to map the range {} - {}", map_low, map_high);
                     println!("changing by {}", &change);
                     println!("changing all seeds from {} to {}", &seed_low, &seed_high);
                     changed_seeds.push(seed_low + change);
                     changed_seeds.push(seed_range);
                     pairs_to_check -= 1;
-                    // println!("changed seeds:  {:?}", &changed_seeds);
-                    // println!("seeds to check: {:?}", &seeds);
                 }
                 else if (seed_low >= dsr[1] && seed_low < dsr[1] + dsr[2]) || // lower half is in the range
                     (seed_high >= dsr[1] && seed_high < dsr[1] + dsr[2]) || // upper half is in the range
                     (dsr[1] >= seed_low && dsr[1] + dsr[2] < seed_high) { // middle is in the range
                     // only the lowest x seed is inside the map range
-                    // println!("checking to map the range {} - {}", map_low, map_high);
                     println!("changing by {}", &change);
                     let (new_seeds, old_seeds) = seeds_splitter(seed_low, seed_range, dsr[1], dsr[2], change);
                     if old_seeds.len() > 2 {pairs_to_check += 1;}
@@ -92,7 +82,6 @@ pub fn day_05(data_string: String){
                     for s in old_seeds{seeds.push(s);}
                     for s in new_seeds{changed_seeds.push(s);}
                 }
-
                 else { // None of the seeds are inside the map range
                     println!("no seeds changed");
                     seeds.push(seed_low);
@@ -101,19 +90,12 @@ pub fn day_05(data_string: String){
                 }
 
             }
-            // println!("new seed locations: {:?}", &changed_seeds);
         }
     }
     for cs in &changed_seeds {
         seeds.push(*cs);
     }
     // println!("final seeds: {:?}", &seeds);
-    let mut n = 0;
-    // println!("printing seed and range pair:");
-    // while n < seeds.len(){
-    //     println!("seed: {} range: {}", &seeds[n], &seeds[n+1]);
-    //     n += 2;
-    // }
     let mut i = seeds.len() - 1;
     // println!("{}", seeds.len());
     while i > 0 {
