@@ -30,3 +30,5 @@ aoc2023/Cargo.lock
 aoc2023/target
 
 
+puzzle_data/
+aoc2023/src/data_days/*.txt
