@@ -1,5 +1,3 @@
-use std::io::empty;
-// static mut VISITED: Vec<[usize; 2]> = Vec::new();
 pub fn day_10(data_string: String){
     let mut tile_maze = Vec::new();
     let mut big_maze = Vec::new();
@@ -29,8 +27,7 @@ pub fn day_10(data_string: String){
         big_maze.push(larger_line);
         big_maze.push(empty_line)
     }
-    print_pipes(&tile_maze);
-    // print_pipes(&big_maze);
+    // print_pipes(&tile_maze);
     let mut path = vec![s];
     let mut big_path = vec![[s[0]*2, s[1] * 2]];
     let mut end_found = false;
@@ -186,43 +183,13 @@ fn print_pipes(tile_maze: &Vec<Vec<char>>){
 }
 
 fn flood(big_maze: Vec<Vec<char>>, big_path: Vec<[usize; 2]>, left_right: Vec<[usize; 2]>) -> i32 {
-    // let mut start = [big_maze.len()/2, big_maze[0].len() / 2];
-    // let mut start = Vec::new();
-    // let s = big_path[0];
-    //
-    // if s[0] > 0 && s[1] > 0{
-    //     if !big_path.contains(&[s[0]-1, s[1]-1]) { start.push([s[0]-1,s[1]-1]);}
-    // }
-    // if s[0] < big_maze.len() && s[1] > 0 {
-    //     if !big_path.contains(&[s[0]+1, s[1]-1]) { start.push([s[0]+1,s[1]-1]);}
-    // }
-    // if s[1] < big_maze[0].len() && s[0] > 0 {
-    //     if !big_path.contains(&[s[0]-1, s[1]+1]) { start.push([s[0]-1,s[1]+1]);}
-    // }
-    // if s[1] < big_maze[0].len() && s[0] < big_maze.len() {
-    //     if !big_path.contains(&[s[0]+1, s[1]+1]) { start.push([s[0]+1,s[1]+1]);}
-    // }
-    // if s[0] > 0{
-    //     if !big_path.contains(&[s[0]-1, s[1]]) { start.push([s[0]-1,s[1]]);}
-    // }
-    // if s[0] < big_maze.len() {
-    //     if !big_path.contains(&[s[0]+1, s[1]]) { start.push([s[0]+1,s[1]]);}
-    // }
-    // if s[1] > 0 {
-    //     if !big_path.contains(&[s[0], s[1]-1]) { start.push([s[0],s[1]-1]);}
-    // }
-    // if s[1] < big_maze[0].len() {
-    //     if !big_path.contains(&[s[0], s[1]+1]) { start.push([s[0],s[1]+1]);}
-    // }
     let maze_bounds = [big_maze.len(), big_maze[0].len()];
-    // println!("{:?}", &start);
     let mut insides = 99999;
     for s in left_right  {
         let mut visited = Vec::new();
         let inside = find_inside(&maze_bounds, &big_path, s, &mut visited);
         if inside < insides && inside != 0 {insides = inside;}
     }
-    // let mut visited = Vec::new();
     return insides;
 }
 
@@ -230,8 +197,6 @@ fn find_inside(mb: &[usize; 2], big_path: &Vec<[usize; 2]>, yx: [usize; 2], visi
     if !big_path.contains(&yx) {
         if !visited.contains(&yx) { visited.push(yx);}
         else { return 0;}
-        // println!("visited: {:?}", &visited);
-        // println!("{:?}", &yx);
         let mut inside = 0;
         if yx[0] % 2 == 0 && yx[1] % 2 == 0 { // it is a coordinate on the original map
             inside += 1;
