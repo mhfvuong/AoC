@@ -167,7 +167,7 @@ pub fn day_03ab(data_string: String){
             if adjacent {
                 tot_number += number.parse::<i32>().unwrap();
                 println!("{} is adjacent to a symbol, sum is {}", &number, &tot_number);
-                adjacent = false;
+                // adjacent = false;
             } else { println!("{} is not adjacent to a symbol", &number); }
         }
         if gear_found {
@@ -182,7 +182,7 @@ pub fn day_03ab(data_string: String){
                     gear_ratios.insert(key, new_v);
                 },
             };
-            gear_found = false;
+            // gear_found = false;
         }
     }
     for gears in gear_ratios.keys(){

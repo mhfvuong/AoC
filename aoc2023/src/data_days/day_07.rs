@@ -70,7 +70,7 @@ pub fn day_07(data_string: String){
     }
     let mut hands_checked = 0;
     let mut type_idx = 0;
-    let mut type_to_be_checked  = ["High card", "One pair", "Two pair", "Three of a kind", "Full house", "Four of a kind", "Five of a kind"];
+    let type_to_be_checked  = ["High card", "One pair", "Two pair", "Three of a kind", "Full house", "Four of a kind", "Five of a kind"];
     while hands_checked < hands.len() {
         let mut hands_to_be_checked = Vec::new();
         for hand in &hands {

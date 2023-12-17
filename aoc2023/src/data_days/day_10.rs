@@ -52,7 +52,7 @@ pub fn day_10(data_string: String){
 }
 
 fn next_step(path: &mut Vec<[usize; 2]>, tile_maze: &Vec<Vec<char>>, current_tile: char,  big_path: &mut Vec<[usize; 2]>, big_maze: &mut Vec<Vec<char>>) {
-    let mut c = path.last().unwrap();
+    let c = path.last().unwrap();
     let x = c[1];
     let y = c[0];
     let mut option_a = Vec::new();

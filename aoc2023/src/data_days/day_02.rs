@@ -42,9 +42,9 @@ pub fn day_02ab(data_string: String){
             println!("{} is a possible game", &game_counter);
             possible_games += game_counter;
         }
-        else {
-            possible = true;
-        }
+        // else {
+        //     possible = true;
+        // }
     }
     println!("{possible_games}");
     println!("{power_counter}");

@@ -23,7 +23,7 @@ pub fn day_04a(data_string: String){
         // println!("{:?}", &elf_numbers);
         let mut matches = 0;
         let mut copy_card = 1;
-        let mut copy_value = 0;
+        let mut copy_value;
         for en in elf_numbers {
             copy_value = copy_card + card;
             if winning_numbers.contains(&en) {
