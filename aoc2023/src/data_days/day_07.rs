@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::hash::Hash;
+// use std::hash::Hash;
 
 pub fn day_07(data_string: String){
     let lines = data_string.lines();
