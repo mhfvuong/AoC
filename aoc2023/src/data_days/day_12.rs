@@ -35,7 +35,7 @@ pub fn day_12(data_string: String) {
                     while !new_spring_idx_found {
                         if group.chars().nth(numbers[num_idx] + spring_idx).unwrap() != '#' { // it is possible
                             spring_idx += numbers[num_idx]; // update spring index
-                            numbers_in_group.push(numbers[num_idx]) // remember which number has been grouped
+                            numbers_in_group.push(numbers[num_idx]); // remember which number has been grouped
                             num_idx += 1; // go to the next number
                             new_spring_idx_found = true;
                         } else {
