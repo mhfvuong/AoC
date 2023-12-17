@@ -42,7 +42,7 @@ pub fn day_12(data_string: String) {
                             spring_idx += 1;
                         }
                     }
-                }
+                }              
                 else if numbers[num_idx] < group.len() - (numbers_in_group.iter().sum() + numbers_in_group.len()) { // if it fits exactly
                     numbers_in_group.push(numbers[num_idx]);
                     num_idx += 1;
