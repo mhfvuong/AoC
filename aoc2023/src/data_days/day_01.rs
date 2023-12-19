@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn day_01a(data_string: String){
+pub fn day_01a(data_string: &String){
     let lines = data_string.lines();
 
     let mut numbers = Vec::new();
