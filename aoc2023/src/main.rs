@@ -44,7 +44,8 @@ fn main() {
         "11" => data_days::day_11::day_11(data_string),
         "12" => data_days::day_12::day_12(data_string),
         "13" => data_days::day_13::day_13(data_string),
-        "tst" => data_days::day_13::day_13(data_string),
+        "14" => data_days::day_14::day_14(data_string),
+        "tst" => data_days::day_14::day_14(data_string),
         _ => print!("no day or test selected"),
     }
 }
