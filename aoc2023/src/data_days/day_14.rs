@@ -3,7 +3,7 @@ pub fn day_14(data_string: String) {
     let mut squared_rocks = Vec::new();
     let mut rounded_rocks = Vec::new();
     let mut y = 0;
-    let mut xx = 0;
+    // let mut xx = 0;
     for line in lines {
         let mut x = 0;
         for rock in line.chars(){
@@ -13,7 +13,7 @@ pub fn day_14(data_string: String) {
             else if rock == 'O' {rounded_rocks.push([y, x]);}
             x += 1;
         }
-        xx = x;
+        // xx = x;
         y += 1;
     }
     let mut rounded_rocks_new = Vec::new();
